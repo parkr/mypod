@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/parkr/radar"
-	"github.com/pkg/errors"
 	"github.com/technoweenie/grohl"
 )
 
@@ -67,23 +66,6 @@ func (ds DownloadService) Create(ctx context.Context, m radar.RadarItem) error {
 
 	// Metadata?
 	return err
-}
-
-// List returns a list of all radar items.
-func (ds DownloadService) List(ctx context.Context, limit int) ([]radar.RadarItem, error) {
-	// Not necessary.
-	return nil, errors.New("not implemented yet")
-}
-
-// Delete removes a RadarItem from the database by its ID.
-func (ds DownloadService) Get(ctx context.Context, id int64) (radar.RadarItem, error) {
-	// Not necessary.
-	return radar.RadarItem{}, errors.New("not implemented yet")
-}
-
-// Delete removes a RadarItem from the database by its ID.
-func (ds DownloadService) Delete(ctx context.Context, id int64) error {
-	return errors.New("not implemented yet")
 }
 
 // Shutdown closes the database connection.
