@@ -63,7 +63,7 @@ func main() {
 		radar.Println("Closing database connection...")
 		downloadService.Shutdown(ctx)
 		emailHandler.Shutdown(ctx)
-		server.Shutdown(ctx)
+		_ = server.Shutdown(ctx)
 		radar.Println("Done with graceful shutdown.")
 	}()
 

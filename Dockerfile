@@ -10,6 +10,9 @@ RUN set -ex \
   && ls /go/bin
 
 FROM wernight/youtube-dl
+RUN set -ex \
+  && youtube-dl --update \
+  && apk add --no-cache attr
 WORKDIR /storage
 COPY --from=builder /go/bin/mypod /bin/mypod
 ENTRYPOINT [ "/bin/mypod" ]

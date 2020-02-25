@@ -19,4 +19,12 @@ docker-server: docker-build
 		-http=:5312 \
 		-debug=true
 
-
+docker-debug: docker-build
+	docker run \
+		-it \
+		--net=host \
+		--user $(shell id -u):$(shell id -g) \
+		-v $(shell pwd)/example:/storage \
+		-p 5312:5312 \
+		--entrypoint=/bin/sh \
+		mypod
