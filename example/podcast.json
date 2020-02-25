@@ -1,0 +1,16 @@
+{
+  "BaseURL": "http://localhost:5312",
+  "Title": "An Example Podcast",
+  "Link": "http://localhost:5312/",
+  "Description": "A podcast which is served from a local filesystem.",
+  "Language": "EN",
+  "Copyright": "N/A",
+  "Author": "Various",
+  "Subtitle": "A subtitle",
+  "Summary": "A summary",
+  "Owner": {
+    "Name": "Example Person",
+    "Email": "you@example.com"
+  },
+  "Image": "http://localhost:5312/podcast.jpg"
+}
