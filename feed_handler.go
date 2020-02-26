@@ -85,6 +85,7 @@ func (h *FeedHandler) GetFeed() (*podcasts.Feed, error) {
 		podcasts.Summary(conf.Summary),
 		podcasts.Owner(conf.Owner.Name, conf.Owner.Email),
 		podcasts.Image(conf.Image),
+		podcasts.Block,
 	)
 }
 
