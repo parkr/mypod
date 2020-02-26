@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
@@ -59,7 +60,7 @@ func (h *FeedHandler) GetFeed() (*podcasts.Feed, error) {
 	}
 	for _, item := range items {
 		itemPath := item.Enclosure.URL
-		item.Enclosure.URL = conf.BaseURL + "/" + itemPath
+		item.Enclosure.URL = conf.BaseURL + "/files/" + url.PathEscape(itemPath)
 		podcast.AddItem(item)
 	}
 
@@ -100,7 +101,7 @@ func (h *FeedHandler) ReadPodcastEpisodes() ([]*podcasts.Item, error) {
 			PubDate: &podcasts.PubDate{Time: info.ModTime()},
 			GUID:    hash(filePath),
 			Enclosure: &podcasts.Enclosure{
-				URL:  fileLocation,
+				URL:  filepath.Base(fileLocation),
 				Type: mime.String(),
 			},
 		})
