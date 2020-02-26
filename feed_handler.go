@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -172,6 +173,12 @@ func (h *FeedHandler) ReadPodcastEpisodes(conf Config) ([]*podcasts.Item, error)
 		items = append(items, item)
 		return nil
 	})
+
+	// Sort by pubDate DESC (newer first, older last).
+	sort.SliceStable(items, func(i, j int) bool {
+		return items[i].PubDate.Time.After(items[j].PubDate.Time)
+	})
+
 	return items, walkErr
 }
 

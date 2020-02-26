@@ -57,8 +57,6 @@ func main() {
 	handler := mypod.AdditionalLogContextHandler(mux)
 	handler = radar.LoggingHandler(handler)
 
-	downloadService.Create(nil, radar.RadarItem{URL: "https://www.youtube.com/watch?v=H9VIkreslyw"})
-
 	radar.Println("Starting server on", binding)
 	server := &http.Server{Addr: binding, Handler: handler}
 
