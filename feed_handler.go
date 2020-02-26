@@ -111,7 +111,7 @@ func (h *FeedHandler) ReadPodcastEpisodes() ([]*podcasts.Item, error) {
 		items = append(items, &podcasts.Item{
 			Title:   titleize(fileLocation),
 			PubDate: &podcasts.PubDate{Time: info.ModTime()},
-			GUID:    hash(filePath),
+			GUID:    hash(filePath + info.ModTime().String()),
 			Enclosure: &podcasts.Enclosure{
 				URL:  filepath.Base(fileLocation),
 				Type: mime.String(),
