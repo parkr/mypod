@@ -21,6 +21,7 @@ type Config struct {
 	}
 	Image      string
 	Categories []string
+	Explicit   bool
 }
 
 func ReadConfig(filepath string) (Config, error) {

@@ -91,6 +91,7 @@ func (h *FeedHandler) GetFeed() (*podcasts.Feed, error) {
 		podcasts.Image(conf.Image),
 		podcasts.Block,
 		setCategories(conf),
+		setExplicit(conf.Explicit),
 	)
 }
 
@@ -104,7 +105,17 @@ func setCategories(conf Config) func(f *podcasts.Feed) error {
 		}
 		return nil
 	}
+}
 
+func setExplicit(explicit bool) func(f *podcasts.Feed) error {
+	return func(f *podcasts.Feed) error {
+		if explicit {
+			f.Channel.Explicit = podcasts.ValueYes
+		} else {
+			f.Channel.Explicit = "no"
+		}
+		return nil
+	}
 }
 
 func (h *FeedHandler) ReadPodcastEpisodes(conf Config) ([]*podcasts.Item, error) {

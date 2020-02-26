@@ -13,5 +13,6 @@
     "Email": "you@example.com"
   },
   "Image": "http://localhost:5312/podcast.jpg",
-  "Categories": ["example", "various"]
+  "Categories": ["example", "various"],
+  "Explicit": false
 }
