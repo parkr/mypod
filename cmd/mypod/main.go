@@ -55,8 +55,11 @@ func main() {
 
 	go emailHandler.Start()
 
+	handler := mypod.AdditionalLogContextHandler(mux)
+	handler = radar.LoggingHandler(handler)
+
 	radar.Println("Starting server on", binding)
-	server := &http.Server{Addr: binding, Handler: radar.LoggingHandler(mux)}
+	server := &http.Server{Addr: binding, Handler: handler}
 
 	defer func() {
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
