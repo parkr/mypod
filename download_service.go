@@ -36,11 +36,11 @@ func (ds DownloadService) Create(ctx context.Context, m radar.RadarItem) error {
 	defer cancel()
 	cmd := exec.CommandContext(dlCtx,
 		"youtube-dl",
-		"--abort-on-error",
-		"--extract-audio",
-		"--audio-format", "m4a",
-		"--audio-quality", "0",
-		"--xattrs",
+		"--abort-on-error",      // tell me if something went wrong
+		"--extract-audio",       // just audio
+		"--audio-format", "m4a", // m4a format
+		"--audio-quality", "0", // best audio quality
+		"--add-metadata", // add metadata to file
 		"--exec", fmt.Sprintf("mv {} \"%s\"", filepath.Join(ds.storageDir, "files")),
 		m.URL,
 	)

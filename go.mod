@@ -3,6 +3,7 @@ module github.com/parkr/mypod
 go 1.13
 
 require (
+	github.com/dhowden/tag v0.0.0-20191122115059-7e5c04feccd8
 	github.com/gabriel-vasile/mimetype v1.0.2
 	github.com/go-http-utils/etag v0.0.0-20161124023236-513ea8f21eb1
 	github.com/go-http-utils/fresh v0.0.0-20161124030543-7231e26a4b27 // indirect
