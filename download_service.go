@@ -41,7 +41,7 @@ func (ds DownloadService) Create(ctx context.Context, m radar.RadarItem) error {
 		"--audio-format", "m4a", // m4a format
 		"--audio-quality", "0", // best audio quality
 		"--add-metadata", // add metadata to file
-		"--exec", fmt.Sprintf("mv {} \"%s\"", filepath.Join(ds.storageDir, "files")),
+		"--exec", fmt.Sprintf("touch {} && mv {} \"%s\"", filepath.Join(ds.storageDir, "files")),
 		m.URL,
 	)
 	cmd.Dir = tmpDir
