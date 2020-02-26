@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/gabriel-vasile/mimetype"
@@ -113,8 +114,9 @@ func (h *FeedHandler) ReadPodcastEpisodes() ([]*podcasts.Item, error) {
 			PubDate: &podcasts.PubDate{Time: info.ModTime()},
 			GUID:    hash(filePath + info.ModTime().String()),
 			Enclosure: &podcasts.Enclosure{
-				URL:  filepath.Base(fileLocation),
-				Type: mime.String(),
+				URL:    filepath.Base(fileLocation),
+				Length: strconv.FormatInt(info.Size(), 10),
+				Type:   mime.String(),
 			},
 		})
 		return nil
