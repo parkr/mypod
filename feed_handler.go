@@ -39,7 +39,12 @@ func (h *FeedHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *FeedHandler) GetFeed() (*podcasts.Feed, error) {
-	conf, err := ReadConfig(h.dir + "/podcast.json")
+	conf, err := ReadConfig(filepath.Join(h.dir, "podcast.json"))
+	if err != nil {
+		return nil, err
+	}
+
+	baseURL, err := url.Parse(conf.BaseURL)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +65,14 @@ func (h *FeedHandler) GetFeed() (*podcasts.Feed, error) {
 	}
 	for _, item := range items {
 		itemPath := item.Enclosure.URL
-		item.Enclosure.URL = conf.BaseURL + "/files/" + url.PathEscape(itemPath)
+		itemURL := &url.URL{
+			Scheme: baseURL.Scheme,
+			Opaque: baseURL.Opaque,
+			User:   baseURL.User,
+			Host:   baseURL.Host,
+			Path:   "/files/" + itemPath,
+		}
+		item.Enclosure.URL = itemURL.String()
 		podcast.AddItem(item)
 	}
 
