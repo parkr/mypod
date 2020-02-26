@@ -19,7 +19,8 @@ type Config struct {
 		Name  string
 		Email string
 	}
-	Image string
+	Image      string
+	Categories []string
 }
 
 func ReadConfig(filepath string) (Config, error) {

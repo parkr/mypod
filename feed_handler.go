@@ -90,7 +90,21 @@ func (h *FeedHandler) GetFeed() (*podcasts.Feed, error) {
 		podcasts.Owner(conf.Owner.Name, conf.Owner.Email),
 		podcasts.Image(conf.Image),
 		podcasts.Block,
+		setCategories(conf),
 	)
+}
+
+func setCategories(conf Config) func(f *podcasts.Feed) error {
+	return func(f *podcasts.Feed) error {
+		f.Channel.Categories = []*podcasts.ItunesCategory{}
+		for _, category := range conf.Categories {
+			f.Channel.Categories = append(f.Channel.Categories, &podcasts.ItunesCategory{
+				Text: category,
+			})
+		}
+		return nil
+	}
+
 }
 
 func (h *FeedHandler) ReadPodcastEpisodes(conf Config) ([]*podcasts.Item, error) {
@@ -121,6 +135,7 @@ func (h *FeedHandler) ReadPodcastEpisodes(conf Config) ([]*podcasts.Item, error)
 				URL:    filepath.Base(fileLocation),
 				Length: strconv.FormatInt(info.Size(), 10),
 			},
+			Explicit: "no",
 		}
 
 		if mime, err := mimetype.DetectFile(filePath); err == nil {
