@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-http-utils/etag"
 	"github.com/mailgun/mailgun-go"
 	"github.com/parkr/mypod"
 	"github.com/parkr/radar"
@@ -49,8 +50,8 @@ func main() {
 	feedHandler := mypod.NewFeedHandler(storage, grohl.CurrentContext)
 	mux.Handle("/feed.xml", feedHandler)
 
-	mux.Handle("/files/", http.FileServer(http.Dir(storage)))
-	mux.Handle("/podcast.jpg", http.FileServer(http.Dir(storage+"/static")))
+	mux.Handle("/files/", etag.Handler(http.FileServer(http.Dir(storage)), false))
+	mux.Handle("/podcast.jpg", etag.Handler(http.FileServer(http.Dir(storage+"/static")), false))
 
 	go emailHandler.Start()
 
