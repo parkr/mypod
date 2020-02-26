@@ -50,7 +50,7 @@ func main() {
 	mux.Handle("/feed.xml", feedHandler)
 
 	mux.Handle("/files/", http.FileServer(http.Dir(storage)))
-	mux.Handle("/", http.FileServer(http.Dir(storage+"/static")))
+	mux.Handle("/podcast.jpg", http.FileServer(http.Dir(storage+"/static")))
 
 	go emailHandler.Start()
 
