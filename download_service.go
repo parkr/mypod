@@ -36,6 +36,7 @@ func (ds DownloadService) Create(ctx context.Context, m radar.RadarItem) error {
 	defer cancel()
 	cmd := exec.CommandContext(dlCtx,
 		"youtube-dl",
+		"--cookies", filepath.Join(ds.storageDir, "yt-dl-cookies.txt"),
 		"--abort-on-error",      // tell me if something went wrong
 		"--extract-audio",       // just audio
 		"--audio-format", "m4a", // m4a format
