@@ -26,7 +26,15 @@ func (h *additionalLoggingHandler) ServeHTTP(w http.ResponseWriter, r *http.Requ
 		"status":  rl.status,
 		"size":    rl.size,
 		"elapsed": time.Since(rl.start).String(),
+		"client":  remoteAddr(r),
 	})
+}
+
+func remoteAddr(r *http.Request) string {
+	if forwardedFor := r.Header.Get("X-Forwarded-For"); forwardedFor != "" {
+		return forwardedFor
+	}
+	return r.RemoteAddr
 }
 
 type responseLogger struct {
