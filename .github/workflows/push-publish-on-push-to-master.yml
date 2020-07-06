@@ -1,10 +1,10 @@
 on:
   push:
     branches:
-      - master
+      - main
       - github-actions
 
-name: Publish on push to master
+name: Publish on push to main
 jobs:
   publishDockerImage:
     name: Publish Docker Image
