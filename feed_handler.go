@@ -136,7 +136,7 @@ func (h *FeedHandler) ReadPodcastEpisodes(conf Config) ([]*podcasts.Item, error)
 
 		item := &podcasts.Item{
 			Title:    titleize(fileLocation),
-			PubDate:  &podcasts.PubDate{Time: info.ModTime()},
+			PubDate:  podcasts.NewPubDate(info.ModTime()),
 			GUID:     hash(filePath + info.ModTime().String()),
 			Author:   conf.Author,
 			Subtitle: "A subtitle for this episode",
@@ -166,7 +166,7 @@ func (h *FeedHandler) ReadPodcastEpisodes(conf Config) ([]*podcasts.Item, error)
 		}
 
 		if duration, err := readDuration(filePath); err == nil {
-			item.Duration = duration
+			item.Duration = podcasts.NewDuration(duration)
 		}
 
 		items = append(items, item)
