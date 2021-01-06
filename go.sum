@@ -12,8 +12,6 @@ github.com/facebookgo/subset v0.0.0-20150612182917-8dac2c3c4870 h1:E2s37DuLxFhQD
 github.com/facebookgo/subset v0.0.0-20150612182917-8dac2c3c4870/go.mod h1:5tD+neXqOorC30/tWg0LCSkrqj/AR6gu8yY8/fpw1q0=
 github.com/fsnotify/fsnotify v1.4.7 h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
-github.com/gabriel-vasile/mimetype v1.0.2 h1:GKCo1TUCg0pV0R4atTcaLv/9SI2W9xPgMySZxUxcJOE=
-github.com/gabriel-vasile/mimetype v1.0.2/go.mod h1:6CDPel/o/3/s4+bp6kIbsWATq8pmgOisOPG40CJa6To=
 github.com/gabriel-vasile/mimetype v1.1.2 h1:gaPnPcNor5aZSVCJVSGipcpbgMWiAAj9z182ocSGbHU=
 github.com/gabriel-vasile/mimetype v1.1.2/go.mod h1:6CDPel/o/3/s4+bp6kIbsWATq8pmgOisOPG40CJa6To=
 github.com/gobuffalo/envy v1.7.0 h1:GlXgaiBkmrYMHco6t4j7SacKO4XUjvh5pwXh0f4uxXU=
@@ -58,6 +56,8 @@ github.com/stretchr/testify v1.3.0 h1:TivCn/peBQ7UY8ooIcPgZFpTNSz0Q2U6UrFlUfqbe0
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
 github.com/technoweenie/grohl v0.0.0-20140924204239-f4613feb389e h1:C96my5kght8CqB7dsf3RuBGRwC+kE15Xqt6xTJGhv2Y=
 github.com/technoweenie/grohl v0.0.0-20140924204239-f4613feb389e/go.mod h1:DTwHbmk3crL4f3wYVW8kGhPwnwvO3B51wR+XR1yD2Ww=
+github.com/technoweenie/grohl v0.0.0-20160607152413-338e595539f9 h1:6ymZ07BLoR3ULQTMSQHZSP6t3DPgLFtNbD3zHSmLDcY=
+github.com/technoweenie/grohl v0.0.0-20160607152413-338e595539f9/go.mod h1:DTwHbmk3crL4f3wYVW8kGhPwnwvO3B51wR+XR1yD2Ww=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2 h1:VklqNMn3ovrHsnt90PveolxSbWFaJdECFbxSq0Mqo2M=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/net v0.0.0-20180724234803-3673e40ba225/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
