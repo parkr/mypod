@@ -1,0 +1,17 @@
+# Dependabot automatically keeps our packages up to date
+# Docs: https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      time: "09:00"
+      interval: daily
+      timezone: America/New_York
+    reviewers:
+      - parkr
+    labels:
+      - dependencies
+      - actions
+    open-pull-requests-limit: 100
