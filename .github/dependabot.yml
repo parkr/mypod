@@ -11,7 +11,4 @@ updates:
       timezone: America/New_York
     reviewers:
       - parkr
-    labels:
-      - dependencies
-      - actions
     open-pull-requests-limit: 100
