@@ -3,12 +3,19 @@
 
 version: 2
 updates:
-  - package-ecosystem: docker
-    directory: /
-    schedule:
-      time: "09:00"
-      interval: daily
-      timezone: America/New_York
-    reviewers:
-      - parkr
-    open-pull-requests-limit: 100
+- package-ecosystem: gomod
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "11:00"
+  reviewers:
+    - parkr
+  open-pull-requests-limit: 99
+- package-ecosystem: docker
+  directory: /
+  schedule:
+    interval: daily
+    time: "11:00"
+  reviewers:
+    - parkr
+  open-pull-requests-limit: 100
