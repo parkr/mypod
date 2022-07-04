@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -70,6 +71,7 @@ func (h *FeedHandler) GetFeed() (*podcasts.Feed, error) {
 		return nil, err
 	}
 	for _, item := range items {
+		// Complete podcast episode URL
 		itemPath := item.Enclosure.URL
 		itemURL := &url.URL{
 			Scheme: baseURL.Scheme,
@@ -79,6 +81,18 @@ func (h *FeedHandler) GetFeed() (*podcasts.Feed, error) {
 			Path:   "/files/" + itemPath,
 		}
 		item.Enclosure.URL = itemURL.String()
+
+		// Complete podcast episode image URL
+		imagePath := item.Image.Href
+		imageURL := &url.URL{
+			Scheme: baseURL.Scheme,
+			Opaque: baseURL.Opaque,
+			User:   baseURL.User,
+			Host:   baseURL.Host,
+			Path:   imagePath,
+		}
+		item.Image.Href = imageURL.String()
+
 		podcast.AddItem(item)
 	}
 
@@ -119,6 +133,14 @@ func setExplicit(explicit bool) func(f *podcasts.Feed) error {
 }
 
 func (h *FeedHandler) ReadPodcastEpisodes(conf Config) ([]*podcasts.Item, error) {
+	imagePaths, err := listImagePaths(h.dir + "/images")
+	if err != nil {
+		grohl.Log(grohl.Data{
+			"msg":   "listing thumbnail images",
+			"error": err.Error(),
+		})
+	}
+
 	items := []*podcasts.Item{}
 	walkErr := filepath.Walk(h.dir+"/files", func(filePath string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -141,12 +163,17 @@ func (h *FeedHandler) ReadPodcastEpisodes(conf Config) ([]*podcasts.Item, error)
 			Author:   conf.Author,
 			Subtitle: "A subtitle for this episode",
 			Summary:  &podcasts.ItunesSummary{Value: "A summary for this episode"},
-			Image:    &podcasts.ItunesImage{Href: conf.Image},
 			Enclosure: &podcasts.Enclosure{
 				URL:    filepath.Base(fileLocation),
 				Length: strconv.FormatInt(info.Size(), 10),
 			},
 			Explicit: "no",
+		}
+
+		if thumbnailPath := episodeThumbnailPath(imagePaths, filePath); thumbnailPath != "" {
+			item.Image = &podcasts.ItunesImage{Href: thumbnailPath}
+		} else {
+			item.Image = &podcasts.ItunesImage{Href: conf.Image}
 		}
 
 		if mime, err := mimetype.DetectFile(filePath); err == nil {
@@ -197,6 +224,33 @@ func titleize(fileLocation string) string {
 func hash(str string) string {
 	sum := sha256.Sum256([]byte(str))
 	return hex.EncodeToString(sum[:])
+}
+
+func listImagePaths(imagesDir string) ([]string, error) {
+	infos, err := ioutil.ReadDir(imagesDir)
+	if err != nil {
+		return []string{}, err
+	}
+	thumbnails := []string{}
+	for _, info := range infos {
+		if !info.IsDir() {
+			thumbnails = append(thumbnails, info.Name())
+		}
+	}
+	return thumbnails, nil
+}
+
+func episodeThumbnailPath(imagePaths []string, filePath string) string {
+	episodeName := filepath.Base(filePath)
+	episodeName = episodeName[0 : len(episodeName)-len(filepath.Ext(episodeName))]
+
+	for _, thumbnailFileName := range imagePaths {
+		if strings.HasPrefix(thumbnailFileName, episodeName) {
+			return "/images/" + thumbnailFileName
+		}
+	}
+
+	return ""
 }
 
 func readMetadata(filePath string) (tag.Metadata, error) {

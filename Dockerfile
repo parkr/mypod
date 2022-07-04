@@ -12,7 +12,12 @@ RUN set -ex \
 FROM wernight/youtube-dl
 RUN set -ex \
   && youtube-dl --update \
-  && apk add --no-cache attr
+  && apk add --no-cache attr wget
+RUN set -ex \
+  && wget https://github.com/wez/atomicparsley/releases/download/20210715.151551.e7ad03a/AtomicParsleyAlpine.zip \
+  && unzip AtomicParsleyAlpine.zip \
+  && mv AtomicParsley /usr/local/bin/AtomicParsley \
+  && rm AtomicParsleyAlpine.zip
 WORKDIR /storage
 COPY --from=builder /go/bin/mypod /bin/mypod
 ENTRYPOINT [ "/bin/mypod" ]
