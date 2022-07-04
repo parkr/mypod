@@ -12,7 +12,7 @@
     "Name": "Example Person",
     "Email": "you@example.com"
   },
-  "Image": "http://localhost:5312/podcast.jpg",
+  "Image": "/podcast.jpg",
   "Categories": ["example", "various"],
   "Explicit": false
 }

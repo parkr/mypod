@@ -49,8 +49,8 @@ func main() {
 	feedHandler := mypod.NewFeedHandler(storage, grohl.CurrentContext)
 	mux.Handle("/feed.xml", feedHandler)
 
-	mux.Handle("/files/", http.FileServer(http.Dir(storage)))
-	mux.Handle("/images/", http.FileServer(http.Dir(storage)))
+	mux.Handle("/files/", http.StripPrefix("/files", http.FileServer(http.Dir(storage+"/files"))))
+	mux.Handle("/images/", http.StripPrefix("/images", http.FileServer(http.Dir(storage+"/images"))))
 	mux.Handle("/", http.FileServer(http.Dir(storage+"/static")))
 
 	go emailHandler.Start()
