@@ -41,8 +41,10 @@ func (ds DownloadService) Create(ctx context.Context, m radar.RadarItem) error {
 		"--extract-audio",       // just audio
 		"--audio-format", "m4a", // m4a format
 		"--audio-quality", "0", // best audio quality
-		"--add-metadata", // add metadata to file
-		"--exec", fmt.Sprintf("touch {} && mv {} \"%s\"", filepath.Join(ds.storageDir, "files")),
+		"--add-metadata",    // add metadata to file
+		"--embed-thumbnail", // add the thumbnail as cover art
+		"--write-thumbnail", // write thumbnail to file as well
+		"--exec", fmt.Sprintf("touch {} && mv {} %q", filepath.Join(ds.storageDir, "files")),
 		m.URL,
 	)
 	cmd.Dir = tmpDir
@@ -57,6 +59,38 @@ func (ds DownloadService) Create(ctx context.Context, m radar.RadarItem) error {
 	if err := cmd.Run(); err != nil {
 		return err
 	}
+
+	grohl.Log(grohl.Data{
+		"msg":            "completed download",
+		"url":            m.URL,
+		"dir":            tmpDir,
+		"elapsed_user":   cmd.ProcessState.UserTime().String(),
+		"elapsed_system": cmd.ProcessState.SystemTime().String(),
+	})
+
+	// Move thumbnail (and other files generated) to images dir
+	fileInfos, err := ioutil.ReadDir(tmpDir)
+	if err != nil {
+		return err
+	}
+	for _, fileInfo := range fileInfos {
+		if fileInfo.IsDir() {
+			continue
+		}
+
+		grohl.Log(grohl.Data{
+			"msg":  "moving thumbnail",
+			"name": fileInfo.Name(),
+		})
+		err := os.Rename(
+			filepath.Join(tmpDir, fileInfo.Name()),
+			filepath.Join(ds.storageDir, "images", fileInfo.Name()),
+		)
+		if err != nil {
+			return err
+		}
+	}
+
 	grohl.Log(grohl.Data{
 		"msg":            "completed download",
 		"url":            m.URL,
