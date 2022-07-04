@@ -37,5 +37,8 @@ The podcast-wide configuration can be placed in `podcast.json` in your storage d
 Go builds in only a small number of MIME types, preferring instead to read the
 `mime.types` files commonly found on disk. On Unix, this includes `/etc/mime.types`,
 `/etc/apache2/mime.types`, `/etc/apache/mime.types`, and `/etc/httpd/conf/mime.types`.
-When running mypod in the provided Docker image, MIME types are downloaded from the Nginx
-repository. If you have custom MIME types on your server, mount them as a read-only volume to one of these paths.
+When running mypod in the provided Docker image, MIME types are downloaded from the Apache2
+project. If you have custom MIME types on your server, mount them as a read-only volume to one of these paths.
+**Note:** MIME types must be in the format `<type> <ext>`, with no semi-colons or any other text.
+For example, the nginx `mime.types` file is an nginx directive and not a strict MIME types file
+so the Go MIME parsing will fail to read this properly.

@@ -19,7 +19,7 @@ RUN set -ex \
   && mv AtomicParsley /usr/local/bin/AtomicParsley \
   && rm AtomicParsleyAlpine.zip
 RUN set -ex \
-  && wget -O /etc/mime.types https://raw.githubusercontent.com/nginx/nginx/release-1.23.0/conf/mime.types
+  && wget -O /etc/mime.types https://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?revision=1901273&view=co
 WORKDIR /storage
 COPY --from=builder /go/bin/mypod /bin/mypod
 ENTRYPOINT [ "/bin/mypod" ]
