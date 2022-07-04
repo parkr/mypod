@@ -241,12 +241,23 @@ func listImagePaths(imagesDir string) ([]string, error) {
 }
 
 func episodeThumbnailPath(imagePaths []string, filePath string) string {
+	// Try the exact episode name
 	episodeName := filepath.Base(filePath)
 	episodeName = episodeName[0 : len(episodeName)-len(filepath.Ext(episodeName))]
 
 	for _, thumbnailFileName := range imagePaths {
 		if strings.HasPrefix(thumbnailFileName, episodeName) {
 			return "/images/" + thumbnailFileName
+		}
+	}
+
+	// Try removing the video key
+	if idx := strings.LastIndex(episodeName, "-"); idx > 0 {
+		episodeName = episodeName[0:idx]
+		for _, thumbnailFileName := range imagePaths {
+			if strings.HasPrefix(thumbnailFileName, episodeName) {
+				return "/images/" + thumbnailFileName
+			}
 		}
 	}
 

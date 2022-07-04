@@ -23,6 +23,16 @@ func TestEpisodeThumbnailPath(t *testing.T) {
 			episodePath: "A Very Complicated Episode (Name).m4a",
 			expected:    "/images/A Very Complicated Episode (Name).webp",
 		},
+		{
+			thumbnails:  []string{"A Very, Very Complicated Episode (Name).jpg", "A Very Complicated Episode (Name).webp"},
+			episodePath: "A Very Complicated Episode (Name)-bmSAYlu0NcY.m4a",
+			expected:    "/images/A Very Complicated Episode (Name).webp",
+		},
+		{
+			thumbnails:  []string{"A Very - indeed very - Very Complicated Episode (Name).jpg", "A Very - indeed very - Complicated Episode (Name).webp"},
+			episodePath: "A Very - indeed very - Complicated Episode (Name)-bmSAYlu0NcY.m4a",
+			expected:    "/images/A Very - indeed very - Complicated Episode (Name).webp",
+		},
 	}
 	for _, testcase := range testcases {
 		actual := episodeThumbnailPath(testcase.thumbnails, testcase.episodePath)
