@@ -101,7 +101,7 @@ func (h *FeedHandler) GetFeed() (*podcasts.Feed, error) {
 		Opaque: baseURL.Opaque,
 		User:   baseURL.User,
 		Host:   baseURL.Host,
-		conf.Image,
+		Path:   conf.Image,
 	}
 
 	// build feed
