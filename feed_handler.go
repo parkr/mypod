@@ -96,6 +96,14 @@ func (h *FeedHandler) GetFeed() (*podcasts.Feed, error) {
 		podcast.AddItem(item)
 	}
 
+	imageURL := &url.URL{
+		Scheme: baseURL.Scheme,
+		Opaque: baseURL.Opaque,
+		User:   baseURL.User,
+		Host:   baseURL.Host,
+		conf.Image,
+	}
+
 	// build feed
 	return podcast.Feed(
 		podcasts.Author(conf.Author),
@@ -103,7 +111,7 @@ func (h *FeedHandler) GetFeed() (*podcasts.Feed, error) {
 		podcasts.Subtitle(conf.Subtitle),
 		podcasts.Summary(conf.Summary),
 		podcasts.Owner(conf.Owner.Name, conf.Owner.Email),
-		podcasts.Image(conf.Image),
+		podcasts.Image(imageURL.String()),
 		setCategories(conf),
 		setExplicit(conf.Explicit),
 	)
