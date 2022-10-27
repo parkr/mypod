@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mailgun/mailgun-go"
+	"github.com/mailgun/mailgun-go/v4"
 	"github.com/parkr/mypod"
 	"github.com/parkr/radar"
 	"github.com/technoweenie/grohl"
