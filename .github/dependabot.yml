@@ -19,3 +19,11 @@ updates:
   reviewers:
     - parkr
   open-pull-requests-limit: 100
+- package-ecosystem: github-actions
+  directory: /
+  schedule:
+    interval: daily
+    time: "11:00"
+  reviewers:
+    - parkr
+  open-pull-requests-limit: 100
