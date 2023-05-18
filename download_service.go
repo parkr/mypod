@@ -3,6 +3,7 @@ package mypod
 import (
 	"context"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -82,7 +83,7 @@ func (ds DownloadService) Create(ctx context.Context, m radar.RadarItem) error {
 			"msg":  "moving thumbnail",
 			"name": fileInfo.Name(),
 		})
-		err := os.Rename(
+		err := MoveFile(
 			filepath.Join(tmpDir, fileInfo.Name()),
 			filepath.Join(ds.storageDir, "images", fileInfo.Name()),
 		)
@@ -105,4 +106,30 @@ func (ds DownloadService) Create(ctx context.Context, m radar.RadarItem) error {
 
 // Shutdown closes the database connection.
 func (ds DownloadService) Shutdown(ctx context.Context) {
+}
+
+// MoveFile provides os.Rename functionality within the Docker environment.
+// See https://gist.github.com/var23rav/23ae5d0d4d830aff886c3c970b8f6c6b.
+func MoveFile(sourcePath, destPath string) error {
+	inputFile, err := os.Open(sourcePath)
+	if err != nil {
+		return fmt.Errorf("Couldn't open source file: %s", err)
+	}
+	outputFile, err := os.Create(destPath)
+	if err != nil {
+		inputFile.Close()
+		return fmt.Errorf("Couldn't open dest file: %s", err)
+	}
+	defer outputFile.Close()
+	_, err = io.Copy(outputFile, inputFile)
+	inputFile.Close()
+	if err != nil {
+		return fmt.Errorf("Writing to output file failed: %s", err)
+	}
+	// The copy was successful, so now delete the original file
+	err = os.Remove(sourcePath)
+	if err != nil {
+		return fmt.Errorf("Failed removing original file: %s", err)
+	}
+	return nil
 }
