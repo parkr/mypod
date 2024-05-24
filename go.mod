@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/dhowden/tag v0.0.0-20201120070457-d52dcb253c63
-	github.com/gabriel-vasile/mimetype v1.4.3
+	github.com/gabriel-vasile/mimetype v1.4.4
 	github.com/jbub/podcasts v0.2.0
 	github.com/mailgun/mailgun-go/v4 v4.12.0
 	github.com/parkr/radar v1.7.0
