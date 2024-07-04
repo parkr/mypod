@@ -11,19 +11,9 @@ RUN set -ex \
   && CGO_ENABLED=0 go test ./... \
   && ls /go/bin
 
-FROM wernight/youtube-dl
+FROM parkr/youtube-dl-nightly:2024.07.03
 COPY --from=builder /etc/mime.types /etc/mime.types
-RUN set -ex \
-  && youtube-dl --update \
-  && apk add --no-cache attr wget
-# Remove this once there's been a release which includes
-# https://github.com/ytdl-org/youtube-dl/pull/31675
-# Tracking bug: 
-RUN set -ex \
-  && rm /usr/local/bin/youtube-dl \
-  && apk add --no-cache git python3 py3-pip \
-  && python3 -m  pip install --verbose --upgrade --force-reinstall https://github.com/ytdl-org/youtube-dl/archive/refs/heads/master.tar.gz \
-  && which youtube-dl
+RUN which youtube-dl
 RUN set -ex \
   && wget https://github.com/wez/atomicparsley/releases/download/20210715.151551.e7ad03a/AtomicParsleyAlpine.zip \
   && unzip AtomicParsleyAlpine.zip \
