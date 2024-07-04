@@ -37,11 +37,13 @@ func main() {
 	mux := http.NewServeMux()
 	downloadService := mypod.NewDownloadService(storage)
 
+	radarGeneratedChan := make(chan bool)
 	emailHandler := radar.NewEmailHandler(
 		downloadService,
 		getMailgunService(),
 		strings.Split(os.Getenv("MYPOD_ALLOWED_SENDERS"), ","), // Allowed senders (email addresses)
-		debug, // Whether in debug mode
+		debug,              // Whether in debug mode
+		radarGeneratedChan, // Channel to signal when to generate a new radar issue, not used.
 	)
 	mux.Handle("/emails", emailHandler)
 	mux.Handle("/email", emailHandler)
