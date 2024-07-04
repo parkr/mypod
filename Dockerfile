@@ -13,7 +13,7 @@ RUN set -ex \
 
 FROM parkr/youtube-dl-nightly:2024.07.03
 COPY --from=builder /etc/mime.types /etc/mime.types
-RUN which youtube-dl
+RUN which youtube-dl && youtube-dl --version
 RUN set -ex \
   && wget https://github.com/wez/atomicparsley/releases/download/20210715.151551.e7ad03a/AtomicParsleyAlpine.zip \
   && unzip AtomicParsleyAlpine.zip \
