@@ -1,4 +1,4 @@
-FROM golang:1.22.5-alpine as builder
+FROM golang:1.22.6-alpine as builder
 RUN set -ex \
   && wget -O /etc/mime.types 'https://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?revision=1901273&view=co'
 WORKDIR /app
