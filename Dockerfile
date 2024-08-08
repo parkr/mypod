@@ -11,7 +11,7 @@ RUN set -ex \
   && CGO_ENABLED=0 go test ./... \
   && ls /go/bin
 
-FROM parkr/youtube-dl-nightly:2024.08.02
+FROM parkr/youtube-dl-nightly:2024.08.07
 COPY --from=builder /etc/mime.types /etc/mime.types
 RUN which youtube-dl && youtube-dl --version
 RUN set -ex \
