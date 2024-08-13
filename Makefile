@@ -9,11 +9,18 @@ build:
 test:
 	go test ./...
 
-docker-build:
-	docker build -t $(DOCKER_IMAGE) .
+docker-buildx-info:
+	docker buildx version
+	docker buildx ls
+
+docker-buildx-create: docker-buildx-info
+	docker buildx create --platform linux/amd64,linux/arm64 --use
+
+docker-build: docker-buildx-info
+	docker buildx build -t $(DOCKER_IMAGE) --platform linux/arm64,linux/amd64 .
 
 docker-release: docker-build
-	docker push $(DOCKER_IMAGE)
+	docker buildx build -t $(DOCKER_IMAGE) --platform linux/arm64,linux/amd64 --push .
 
 docker-server: docker-build
 	docker run \
