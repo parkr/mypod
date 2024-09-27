@@ -1,12 +1,37 @@
 module github.com/parkr/mypod
 
-go 1.13
+go 1.22
+
+toolchain go1.23.1
 
 require (
 	github.com/dhowden/tag v0.0.0-20201120070457-d52dcb253c63
 	github.com/gabriel-vasile/mimetype v1.4.5
 	github.com/jbub/podcasts v0.2.0
-	github.com/mailgun/mailgun-go/v4 v4.15.2
+	github.com/mailgun/mailgun-go/v4 v4.16.0
 	github.com/parkr/radar v1.8.0
 	github.com/technoweenie/grohl v0.0.0-20160607152413-338e595539f9
+)
+
+require (
+	github.com/ProtonMail/go-crypto v0.0.0-20230217124315-7d5c6f04bbb8 // indirect
+	github.com/cloudflare/circl v1.3.7 // indirect
+	github.com/go-chi/chi/v5 v5.0.8 // indirect
+	github.com/google/go-cmp v0.6.0 // indirect
+	github.com/google/go-github/v53 v53.2.0 // indirect
+	github.com/google/go-querystring v1.1.0 // indirect
+	github.com/google/uuid v1.6.0 // indirect
+	github.com/gorilla/feeds v1.2.0 // indirect
+	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/mailgun/errors v0.3.0 // indirect
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
+	github.com/modern-go/reflect2 v1.0.2 // indirect
+	github.com/parkr/changelog v1.5.0 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
+	github.com/sirupsen/logrus v1.9.0 // indirect
+	golang.org/x/crypto v0.25.0 // indirect
+	golang.org/x/net v0.27.0 // indirect
+	golang.org/x/oauth2 v0.21.0 // indirect
+	golang.org/x/sys v0.22.0 // indirect
+	mvdan.cc/xurls/v2 v2.5.0 // indirect
 )
