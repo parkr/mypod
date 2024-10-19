@@ -11,9 +11,9 @@ RUN set -ex \
   && CGO_ENABLED=0 go test ./... \
   && ls /go/bin
 
-FROM parkr/youtube-dl-nightly:2024.08.07
+FROM parkr/yt-dlp:2024.10.07
 COPY --from=builder /etc/mime.types /etc/mime.types
-RUN which youtube-dl && youtube-dl --version
+RUN which yt-dlp && yt-dlp --version
 RUN set -ex \
   && wget https://github.com/wez/atomicparsley/releases/download/20210715.151551.e7ad03a/AtomicParsleyAlpine.zip \
   && unzip AtomicParsleyAlpine.zip \
