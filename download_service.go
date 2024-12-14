@@ -15,17 +15,21 @@ import (
 )
 
 type DownloadService struct {
-	storageDir string
+	storageDir         string
+	additionalYtdlArgs []string
 }
 
-func NewDownloadService(storageDir string) DownloadService {
-	return DownloadService{storageDir: storageDir}
+func NewDownloadService(storageDir string, additionalYtdlArgs []string) DownloadService {
+	return DownloadService{
+		storageDir:         storageDir,
+		additionalYtdlArgs: additionalYtdlArgs,
+	}
 }
 
 // Create adds a RadarItem to the database.
 func (ds DownloadService) Create(ctx context.Context, m radar.RadarItem) error {
 	// Generate temporary dir to download in.
-	tmpDir, err := ioutil.TempDir("", "mypod")
+	tmpDir, err := os.MkdirTemp("", "mypod")
 	if err != nil {
 		return err
 	}
@@ -37,17 +41,7 @@ func (ds DownloadService) Create(ctx context.Context, m radar.RadarItem) error {
 	defer cancel()
 	cmd := exec.CommandContext(dlCtx,
 		"yt-dlp",
-		"--cookies", filepath.Join(ds.storageDir, "yt-dl-cookies.txt"),
-		"--abort-on-error",      // tell me if something went wrong
-		"--extract-audio",       // just audio
-		"--audio-format", "m4a", // m4a format
-		"--audio-quality", "0", // best audio quality
-		"--add-metadata",    // add metadata to file
-		"--embed-thumbnail", // add the thumbnail as cover art
-		"--write-thumbnail", // write thumbnail to file as well
-		"--embed-chapters",  // embed chapters into the output file
-		"--exec", fmt.Sprintf("touch {} && mv {} %q", filepath.Join(ds.storageDir, "files")),
-		m.URL,
+		ds.getCommandArgs(m.URL)...,
 	)
 	cmd.Dir = tmpDir
 	cmd.Stderr = os.Stderr
@@ -107,6 +101,24 @@ func (ds DownloadService) Create(ctx context.Context, m radar.RadarItem) error {
 
 // Shutdown closes the database connection.
 func (ds DownloadService) Shutdown(ctx context.Context) {
+}
+
+func (ds DownloadService) getCommandArgs(urlToDownload string) []string {
+	args := []string{
+		"--cookies", filepath.Join(ds.storageDir, "yt-dl-cookies.txt"),
+		"--abort-on-error",      // tell me if something went wrong
+		"--extract-audio",       // just audio
+		"--audio-format", "m4a", // m4a format
+		"--audio-quality", "0", // best audio quality
+		"--add-metadata",    // add metadata to file
+		"--embed-thumbnail", // add the thumbnail as cover art
+		"--write-thumbnail", // write thumbnail to file as well
+		"--embed-chapters",  // embed chapters into the output file
+		"--exec", fmt.Sprintf("touch {} && mv {} %q", filepath.Join(ds.storageDir, "files")),
+	}
+	args = append(args, ds.additionalYtdlArgs...)
+	args = append(args, urlToDownload)
+	return args
 }
 
 // MoveFile provides os.Rename functionality within the Docker environment.

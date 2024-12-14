@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"net/http"
 	"os"
@@ -22,6 +23,26 @@ func getMailgunService() radar.MailgunService {
 	return radar.NewMailgunService(mg, os.Getenv("MG_FROM_EMAIL"))
 }
 
+func readAdditionalYtdlArgs(storage string) []string {
+	ytdlArgsFile := storage + "/yt-dl-args.json"
+	if _, err := os.Stat(ytdlArgsFile); os.IsNotExist(err) {
+		return []string{}
+	}
+
+	ytdlArgsFileHandler, err := os.Open(ytdlArgsFile)
+	if err != nil {
+		radar.Println("unable to read yt-dl-args.json:", err)
+		return []string{}
+	}
+	ytdlArgs := []string{}
+	err = json.NewDecoder(ytdlArgsFileHandler).Decode(&ytdlArgs)
+	if err != nil {
+		radar.Println("unable to decode yt-dl-args.json:", err)
+		return []string{}
+	}
+	return ytdlArgs
+}
+
 func main() {
 	var binding string
 	flag.StringVar(&binding, "http", ":5312", "The IP/PORT to bind this server to.")
@@ -35,7 +56,7 @@ func main() {
 	grohl.SetStatter(nil, 0, "")
 
 	mux := http.NewServeMux()
-	downloadService := mypod.NewDownloadService(storage)
+	downloadService := mypod.NewDownloadService(storage, readAdditionalYtdlArgs(storage))
 
 	radarGeneratedChan := make(chan bool)
 	emailHandler := radar.NewEmailHandler(

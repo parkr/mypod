@@ -42,3 +42,15 @@ project. If you have custom MIME types on your server, mount them as a read-only
 **Note:** MIME types must be in the format `<type> <ext>`, with no semi-colons or any other text.
 For example, the nginx `mime.types` file is an nginx directive and not a strict MIME types file
 so the Go MIME parsing will fail to read this properly.
+
+## Download Customization
+
+### Cookies
+
+Provide cookies info in `yt-dl-cookies.txt` in your storage dir.
+
+### Additional yt-dlp flags
+
+If you'd like to customize further the `yt-dlp` command that's run to download
+the podcast episode, place them into an array in `yt-dl-args.json` in your storage dir.
+The array must contain only strings -- any numerics or anything will fail.
