@@ -45,6 +45,7 @@ func (ds DownloadService) Create(ctx context.Context, m radar.RadarItem) error {
 		"--add-metadata",    // add metadata to file
 		"--embed-thumbnail", // add the thumbnail as cover art
 		"--write-thumbnail", // write thumbnail to file as well
+		"--embed-chapters",  // embed chapters into the output file
 		"--exec", fmt.Sprintf("touch {} && mv {} %q", filepath.Join(ds.storageDir, "files")),
 		m.URL,
 	)
