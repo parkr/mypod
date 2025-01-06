@@ -6,7 +6,7 @@ toolchain go1.23.1
 
 require (
 	github.com/dhowden/tag v0.0.0-20201120070457-d52dcb253c63
-	github.com/gabriel-vasile/mimetype v1.4.7
+	github.com/gabriel-vasile/mimetype v1.4.8
 	github.com/jbub/podcasts v0.2.0
 	github.com/mailgun/mailgun-go/v4 v4.21.0
 	github.com/parkr/radar v1.8.0
@@ -29,7 +29,7 @@ require (
 	github.com/parkr/changelog v1.5.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	golang.org/x/crypto v0.31.0 // indirect
-	golang.org/x/net v0.31.0 // indirect
+	golang.org/x/net v0.33.0 // indirect
 	golang.org/x/oauth2 v0.21.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
 	mvdan.cc/xurls/v2 v2.5.0 // indirect
