@@ -8,7 +8,7 @@ require (
 	github.com/dhowden/tag v0.0.0-20201120070457-d52dcb253c63
 	github.com/gabriel-vasile/mimetype v1.4.8
 	github.com/jbub/podcasts v0.2.0
-	github.com/mailgun/mailgun-go/v4 v4.21.0
+	github.com/mailgun/mailgun-go/v4 v4.22.0
 	github.com/parkr/radar v1.8.0
 	github.com/technoweenie/grohl v0.0.0-20160607152413-338e595539f9
 )
@@ -16,7 +16,7 @@ require (
 require (
 	github.com/ProtonMail/go-crypto v0.0.0-20230217124315-7d5c6f04bbb8 // indirect
 	github.com/cloudflare/circl v1.3.7 // indirect
-	github.com/go-chi/chi/v5 v5.1.0 // indirect
+	github.com/go-chi/chi/v5 v5.2.0 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/go-github/v53 v53.2.0 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
