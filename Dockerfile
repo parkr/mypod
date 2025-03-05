@@ -1,6 +1,6 @@
 FROM golang:1.24.0-alpine as builder
 RUN set -ex \
-  && wget -O /etc/mime.types 'https://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?revision=1901273&view=co'
+  && wget -O /etc/mime.types 'https://raw.githubusercontent.com/apache/httpd/refs/heads/trunk/docs/conf/mime.types'
 WORKDIR /app
 COPY go.* ./
 RUN go mod download
