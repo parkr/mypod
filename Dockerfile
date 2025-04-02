@@ -1,4 +1,4 @@
-FROM golang:1.24.1-alpine as builder
+FROM golang:1.24.2-alpine as builder
 RUN set -ex \
   && wget -O /etc/mime.types 'https://raw.githubusercontent.com/apache/httpd/refs/heads/trunk/docs/conf/mime.types'
 WORKDIR /app
