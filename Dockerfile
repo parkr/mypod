@@ -11,7 +11,7 @@ RUN set -ex \
   && CGO_ENABLED=0 go test ./... \
   && ls /go/bin
 
-FROM parkr/yt-dlp:2025.09.26
+FROM parkr/yt-dlp:2025.10.14
 COPY --from=builder /etc/mime.types /etc/mime.types
 RUN which yt-dlp && yt-dlp --version
 RUN set -ex \
