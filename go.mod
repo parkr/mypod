@@ -1,6 +1,6 @@
 module github.com/parkr/mypod
 
-go 1.23.0
+go 1.24.0
 
 toolchain go1.24.1
 
@@ -28,8 +28,8 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/parkr/changelog v1.5.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	golang.org/x/crypto v0.37.0 // indirect
+	golang.org/x/crypto v0.45.0 // indirect
 	golang.org/x/oauth2 v0.27.0 // indirect
-	golang.org/x/sys v0.32.0 // indirect
+	golang.org/x/sys v0.38.0 // indirect
 	mvdan.cc/xurls/v2 v2.5.0 // indirect
 )
